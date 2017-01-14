@@ -1,29 +1,28 @@
 // Run this function after the page has loaded
 $(function () {
 
-var crypto = require('crypto') // https://nodejs.org/api/crypto.html
+  const crypto = require('crypto') // https://nodejs.org/api/crypto.html
+  const hashing= ['md5', 'sha1', 'sha256', 'sha512'];
 
-$('#text-input').bind('input propertychange', function () {
-  var text = this.value
+  $('#text-input').bind('input propertychange', function (event) {
+    console.log(this, this.value)
+    let text = this.value;
 
-  // MD5
-  var md5 = crypto.createHash('md5').update(text, 'utf8').digest('hex')
-  $('#md5-output').text(md5)
+    hashing.forEach(function (hashAlgorithm){
+      runMyHash(hashAlgorithm,text)
+    });
+  });
 
-  // SHA-1
-  var sha1 = crypto.createHash('sha1').update(text, 'utf8').digest('hex')
-  $('#sha1-output').text(sha1)
+  // Focus input box
+  $('#text-input').focus()
 
-  // SHA-256
-  var sha256 = crypto.createHash('sha256').update(text, 'utf8').digest('hex')
-  $('#sha256-output').text(sha256)
+  function runMyHash(hashName, textIWantToHash){
+    // console.log(hashName);
+    let start = performance.now()
+    console.log(crypto);
+    var something = crypto.createHash(hashName).update(textIWantToHash, 'utf8').digest('hex')
 
-  // SHA-512
-  var sha512 = crypto.createHash('sha512').update(text, 'utf8').digest('hex')
-  $('#sha512-output').text(sha512)
-})
-
-// Focus input box
-$('#text-input').focus()
-
-})
+    $(`#${hashName}-output`).text(something)
+    $(`#time-${hashName}`).text(`The total time is ${performance.now() - start} milliseconds`);
+  }
+});
