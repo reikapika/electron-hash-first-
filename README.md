@@ -17,5 +17,6 @@ values of entered text using different algorithms.
 
 Here are some ideas on how it can be improved using other Electron APIs.
 
+- Refactoring for readability.
 - Make headings links that open to Wikipedia page for algorithm.
 - Display time taken to compute each hash.
